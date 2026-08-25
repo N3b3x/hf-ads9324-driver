@@ -83,7 +83,7 @@ Default pins (edit `main/esp32_ads9324_test_config.hpp`):
 
 ## hf-core
 
-`HF_CORE_ENABLE_ADS9324` compiles `Ads9324Handler` (BaseAdc). Product `AdcManager` still owns **ADS7952** only. Flip the AFE in a later pin-freeze when the board has ADS9324 + CONVST/DRDY.
+`HF_CORE_ENABLE_ADS9324` compiles `Ads9324Handler` (`BaseAdc`). Default is **OFF** in both hf-core and product images. ESP32 hf-core examples turn it ON to compile the handler test. Product `AdcManager` still owns **ADS7952** only. Flip the AFE in a later pin-freeze when the board has ADS9324 + CONVST/DRDY.
 
 ## License
 

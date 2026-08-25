@@ -21,4 +21,4 @@ cmake --build build
 ctest --test-dir build
 ```
 
-hf-core: `HF_CORE_ENABLE_ADS9324` includes `Ads9324Handler.cpp` and the driver include path. Default in hf-core is **OFF**. Product `pw_hal_core_features.cmake` may compile the handler without constructing it from `AdcManager`.
+hf-core: `HF_CORE_ENABLE_ADS9324` includes `Ads9324Handler.cpp` and the driver include path. Default in hf-core **and** product `pw_hal_core_features.cmake` is **OFF**. ESP32 hf-core examples turn the flag ON so the handler and `ads9324_handler_test` compile without putting the chip in the product image.
