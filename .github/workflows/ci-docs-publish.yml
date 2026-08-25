@@ -1,0 +1,76 @@
+---
+name: 📚 Docs Publish CI
+
+on:
+  push:
+    branches: [main, 'release/*']
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'docs-versioned-${{ github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  publish-docs:
+    uses: N3b3x/hf-general-ci-tools/.github/workflows/ru-docs-publish.yml@main
+    with:
+      # =============================================================================
+      # Repository Configuration
+      # =============================================================================
+      checkout_recursive: true
+
+      # =============================================================================
+      # Versioning Configuration (Always Enabled)
+      # =============================================================================
+      deployment_branch: 'gh-pages'
+
+      # =============================================================================
+      # Doxygen Configuration
+      # =============================================================================
+      doxygen_config: "_config/Doxyfile"
+      doxygen_working_directory: "."
+
+      # =============================================================================
+      # Jekyll Configuration
+      # =============================================================================
+      jekyll_enabled: true
+      jekyll_config: "_config/_config.yml"
+      jekyll_source: "."
+      jekyll_destination: "_site"
+      jekyll_layouts_dir: "_config/_layouts"
+
+      # =============================================================================
+      # Quality Assurance
+      # =============================================================================
+      run_link_check: true
+      link_check_paths: "**/*.md"
+      verbose: true
+
+      # Markdown linting
+      run_markdown_lint: true
+      markdown_lint_paths: "**/*.md"
+
+      # Spell checking
+      run_spell_check: false
+      spell_check_paths: "**/*.md"
+      spell_check_config: ".cspell.json"
+
+      # =============================================================================
+      # GitHub Pages Deployment
+      # =============================================================================
+      deploy_pages: >-
+        ${{ (github.event_name == 'push' &&
+        (github.ref == format('refs/heads/{0}', github.event.repository.default_branch) ||
+        startsWith(github.ref, 'refs/heads/release/') ||
+        startsWith(github.ref, 'refs/tags/v'))) ||
+        (github.event_name == 'workflow_dispatch' &&
+        (github.ref == format('refs/heads/{0}', github.event.repository.default_branch) ||
+        startsWith(github.ref, 'refs/heads/release/'))) }}

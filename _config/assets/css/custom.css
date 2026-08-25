@@ -1,0 +1,88 @@
+/* =============================================================================
+   Custom CSS for HardFOC Driver Documentation
+   ============================================================================= */
+
+/* Navigation Enhancements */
+.nav-list .nav-list-item .nav-list-expander {
+  display: block;
+}
+
+.nav-list .nav-list-item .nav-list-link {
+  display: block;
+}
+
+.nav-list {
+  z-index: 100;
+}
+
+.site-nav {
+  overflow: visible;
+}
+
+.nav-list .nav-list-item {
+  position: relative;
+}
+
+/* Code Block Enhancements */
+.highlight {
+  border-radius: 0.375rem;
+  overflow-x: auto;
+}
+
+pre {
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+code {
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Callout Enhancements */
+.callout {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+/* Table Enhancements */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+table th,
+table td {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
+table th {
+  background-color: var(--search-result-bg);
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+  
+  .workflow-badges {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+/* Print Styles */
+@media print {
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  pre, code, table {
+    page-break-inside: avoid;
+  }
+}

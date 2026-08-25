@@ -1,0 +1,27 @@
+---
+name: hf-ads9324-driver
+version: "1.0.0"
+description: "Hardware-agnostic ADS9324 16-channel 16-bit simultaneous SAR ADC with integrated PGA"
+
+maintainers:
+  - "HardFOC"
+license: "GPL-3.0"
+
+url: https://www.ti.com/product/ADS9324
+repository: https://github.com/N3b3x/hf-ads9324-driver
+issues: https://github.com/N3b3x/hf-ads9324-driver/issues
+
+targets:
+  - esp32c6
+  - esp32s3
+  - esp32
+
+dependencies:
+  idf: ">=5.0.0"
+
+tags:
+  - "ads9324"
+  - "adc"
+  - "pga"
+  - "spi"
+  - "hardware-agnostic"

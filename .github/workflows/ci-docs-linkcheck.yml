@@ -1,0 +1,40 @@
+---
+name: 🔗 Docs Link Check CI
+
+on:
+  push:
+    branches: [main, 'release/*']
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-docs-linkcheck-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-linkcheck:
+    name: Test Documentation Link Check
+    uses: N3b3x/hf-general-ci-tools/.github/workflows/ru-docs-linkcheck.yml@main
+    with:
+      # =============================================================================
+      # Repository Configuration
+      # =============================================================================
+      checkout_recursive: true
+
+      # =============================================================================
+      # Link Check Configuration
+      # =============================================================================
+      paths: "docs/** *.md **/*.md"
+      fail_on_errors: false
+      timeout: "30"
+      max_retries: "3"
+      retry_wait_time: "2"
+      exclude_private: true
+      exclude_mail: true
+      verbose: true
+      config_file: "_config/lychee.toml"

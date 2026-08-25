@@ -1,0 +1,215 @@
+---
+# =============================================================================
+# Standardized Jekyll Configuration for HardFOC Driver Documentation
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Site Identity
+# -----------------------------------------------------------------------------
+title: "HardFOC ADS9324 Driver"
+description: >
+  Portable C++20 driver for the Texas Instruments ADS9324 12-channel, 12-bit
+  SAR ADC with SPI interface, auto-sequencing, and configurable input range
+
+baseurl: "/hf-ads9324"
+url: "https://n3b3x.github.io"
+
+# -----------------------------------------------------------------------------
+# Author Information
+# -----------------------------------------------------------------------------
+author:
+  name: "N3b3x"
+  email: "n3b3x@example.com"
+  url: "https://github.com/n3b3x"
+
+# -----------------------------------------------------------------------------
+# Directory Configuration
+# -----------------------------------------------------------------------------
+layouts_dir: _config/_layouts
+includes_dir: _config/_includes
+
+# -----------------------------------------------------------------------------
+# Theme and Plugins
+# -----------------------------------------------------------------------------
+remote_theme: just-the-docs/just-the-docs
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+  - jekyll-redirect-from
+  - jekyll-optional-front-matter
+
+# -----------------------------------------------------------------------------
+# Navigation Settings
+# -----------------------------------------------------------------------------
+nav_next_prev: true
+
+# -----------------------------------------------------------------------------
+# Markdown Processing
+# -----------------------------------------------------------------------------
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+# -----------------------------------------------------------------------------
+# Site Settings
+# -----------------------------------------------------------------------------
+timezone: UTC
+encoding: utf-8
+lang: en
+
+# -----------------------------------------------------------------------------
+# Just the Docs Theme Configuration
+# -----------------------------------------------------------------------------
+search_enabled: true
+search:
+  heading_level: 3
+  previews: 5
+  preview_words_before: 10
+  preview_words_after: 15
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: true
+
+nav_enabled: true
+heading_anchors: true
+breadcrumbs: true
+toc:
+  min_level: 2
+  max_level: 4
+
+callouts:
+  note:
+    title: Note
+    color: blue
+  warning:
+    title: Warning
+    color: yellow
+  tip:
+    title: Tip
+    color: green
+  important:
+    title: Important
+    color: red
+
+color_scheme: dark
+toggle_color_scheme: true
+toggle_auto_mode: true
+
+# -----------------------------------------------------------------------------
+# Auxiliary Links (Top Navigation)
+# -----------------------------------------------------------------------------
+aux_links:
+  "📚 GitHub Repository":
+    - "https://github.com/n3b3x/hf-ads9324"
+  "🐛 Report Issues":
+    - "https://github.com/n3b3x/hf-ads9324/issues"
+  "⭐ Star on GitHub":
+    - "https://github.com/n3b3x/hf-ads9324/stargazers"
+
+# -----------------------------------------------------------------------------
+# Footer Customization
+# -----------------------------------------------------------------------------
+footer_content: >
+  Built with ❤️ using
+  <a href='https://just-the-docs.github.io/just-the-docs/'>Just the Docs</a> •
+  <a href='https://github.com/n3b3x/hf-ads9324/blob/main/LICENSE'>GPL v3
+  License</a> •
+  <a href='https://github.com/n3b3x/hf-ads9324'>View on GitHub</a>
+
+# -----------------------------------------------------------------------------
+# Just the Docs Advanced Configuration
+# -----------------------------------------------------------------------------
+just_the_docs:
+  nav_fold: true
+
+  nav_external_links:
+    - title: "📚 GitHub Repository"
+      url: "https://github.com/n3b3x/hf-ads9324"
+    - title: "🐛 Issues"
+      url: "https://github.com/n3b3x/hf-ads9324/issues"
+
+  head_custom: _includes/head_custom.html
+
+  custom_css:
+    - assets/css/custom.css
+  custom_js:
+    - assets/js/custom.js
+
+# -----------------------------------------------------------------------------
+# File Exclusions
+# -----------------------------------------------------------------------------
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .github
+  - "*.gem"
+  - "*.gemspec"
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+  - examples/esp32/scripts/
+  - _config/doxygen-extensions/
+  - src/
+  - inc/
+  - tests/
+
+# -----------------------------------------------------------------------------
+# File Inclusions
+# -----------------------------------------------------------------------------
+include:
+  - _pages
+  - ../README.md
+  - ../LICENSE
+  - assets/
+  - _config/404.html
+
+# -----------------------------------------------------------------------------
+# SEO Configuration
+# -----------------------------------------------------------------------------
+seo:
+  type: "SoftwareApplication"
+  name: "HardFOC ADS9324 Driver"
+  description: >
+    Portable C++20 driver for the Texas Instruments ADS9324 12-channel, 12-bit
+    SAR ADC with SPI interface, auto-sequencing, and configurable input range
+  url: "https://n3b3x.github.io/hf-ads9324"
+  twitter:
+    card: "summary_large_image"
+    site: "@n3b3x"
+  og:
+    type: "website"
+    locale: "en_US"
+
+# -----------------------------------------------------------------------------
+# Social Media Links
+# -----------------------------------------------------------------------------
+social:
+  name: "HardFOC ADS9324 Driver"
+  links:
+    - "https://github.com/n3b3x/hf-ads9324"
+    - "https://github.com/n3b3x"
+
+# -----------------------------------------------------------------------------
+# HTML Compression (Performance Optimization)
+# -----------------------------------------------------------------------------
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: [html, head, body]

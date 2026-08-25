@@ -1,0 +1,85 @@
+---
+name: 🚀 ESP32 Examples Build CI
+
+on:
+  push:
+    branches: [main, develop, release/*, feature/*, bugfix/*]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      clean_build:
+        description: 'Clean build (no cache)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  PROJECT_DIR: examples/esp32
+  TOOLS_DIR: examples/esp32/scripts
+
+permissions:
+  contents: read
+  pull-requests: write
+  actions: read
+
+concurrency:
+  group: esp32-build-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 🔍 Matrix generation and validation
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      project_dir: ${{ steps.vars.outputs.project_dir }}
+      tools_dir: ${{ steps.vars.outputs.tools_dir }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set local variables
+        id: vars
+        run: |
+          echo "project_dir=${{ env.PROJECT_DIR }}" >> "$GITHUB_OUTPUT"
+          echo "tools_dir=${{ env.TOOLS_DIR }}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate configuration
+        run: |
+          cd ${{ steps.vars.outputs.tools_dir }}
+          python3 generate_matrix.py --validate --verbose
+
+      - name: Generate build matrix
+        id: matrix
+        run: |
+          cd ${{ steps.vars.outputs.tools_dir }}
+          MATRIX=$(python3 generate_matrix.py)
+          echo "matrix=${MATRIX}" >> "$GITHUB_OUTPUT"
+          echo "Generated matrix with $(echo "${MATRIX}" | \
+            jq '.include | length') build combinations"
+
+  # 🏗️ Build firmware (parallel matrix)
+  build:
+    needs: validate
+    uses: N3b3x/hf-espidf-ci-tools/.github/workflows/ru-build.yml@main
+    with:
+      project_dir: ${{ needs.validate.outputs.project_dir }}
+      project_tools_dir: ${{ needs.validate.outputs.tools_dir }}
+      clean_build: ${{ github.event.inputs.clean_build == 'true' }}
+
+  # 🔧 Lint and format code in ESP32 folder only
+  lint:
+    uses: N3b3x/hf-general-ci-tools/.github/workflows/ru-cpp-lint.yml@main
+    with:
+      clang_version: "20"
+      clang_format_config: "_config/.clang-format"
+      clang_tidy_config: "_config/.clang-tidy"
+      extensions: "c,cpp,cc,cxx,h,hpp"
+      ignore: >
+        build|.git|third_party|vendor|src/|inc/|include/|docs/|_config/|_site/|
+        examples/esp32/scripts/|examples/esp32/build/
+      files_changed_only: false
+      step_summary: true
+      file_annotations: true

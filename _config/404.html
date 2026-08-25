@@ -1,0 +1,70 @@
+---
+layout: default
+title: "404 - Page Not Found"
+description: "The page you're looking for doesn't exist."
+permalink: /404.html
+nav_exclude: true
+search_exclude: true
+---
+
+<style>
+  .error-container {
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .error-code {
+    font-size: 8rem;
+    font-weight: 900;
+    margin: 0;
+    background: linear-gradient(45deg, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .error-message {
+    font-size: 1.5rem;
+    color: #7f8c8d;
+    margin: 1rem 0 2rem 0;
+  }
+  
+  .navigation-links {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: white;
+  }
+</style>
+
+<div class="error-container">
+  <p class="error-code">404</p>
+  <p class="error-message">Oops! This page doesn't exist.</p>
+  
+  <div class="navigation-links">
+    <a href="{{ '/' | relative_url }}" class="nav-link">🏠 Home</a>
+    <a href="{{ '/docs/' | relative_url }}" class="nav-link">📚 Documentation</a>
+    <a href="https://github.com/n3b3x/hf-ads7952/issues" class="nav-link">🐛 Report Issue</a>
+  </div>
+</div>

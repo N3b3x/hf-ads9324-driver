@@ -1,0 +1,48 @@
+---
+name: 🔍 C++ Lint CI
+
+on:
+  push:
+    branches: [main, 'release/*']
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ci-cpp-lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-cpp-lint:
+    name: Test C++ Linting Tools
+    uses: N3b3x/hf-general-ci-tools/.github/workflows/ru-cpp-lint.yml@main
+    with:
+      # =============================================================================
+      # Clang Configuration
+      # =============================================================================
+      clang_version: "20"
+      clang_format_config: "_config/.clang-format"
+      clang_tidy_config: "_config/.clang-tidy"
+
+      # =============================================================================
+      # File Patterns
+      # =============================================================================
+      extensions: "c,cpp,cc,cxx,h,hpp"
+      ignore: "build|.git|docs|_site|examples"
+
+      # =============================================================================
+      # Analysis Options
+      # =============================================================================
+      files_changed_only: false
+      lines_changed_only: false
+      step_summary: true
+
+      # =============================================================================
+      # Quality Checks
+      # =============================================================================
+      tidy_checks: ""

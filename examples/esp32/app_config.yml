@@ -1,0 +1,72 @@
+---
+version: "1.0"
+
+metadata:
+  project: "ESP32-C6 ADS9324 Driver Examples"
+  default_app: "driver_integration_test"
+  target: "esp32c6"
+  idf_versions: ["release/v5.5", "release/v5.4"]
+  build_types: [["Debug", "Release"], ["Debug"]]
+
+apps:
+  driver_integration_test:
+    description: >
+      Comprehensive ADS9324 driver integration test suite
+      (hardware required for full validation)
+    source_file: "driver_integration_test.cpp"
+    category: "test"
+    idf_versions: ["release/v5.5"]
+    build_types: ["Debug", "Release"]
+    ci_enabled: true
+    featured: true
+    test_sections:
+      - "INITIALIZATION_TESTS"
+      - "PGA_TESTS"
+      - "SNAPSHOT_TESTS"
+      - "CAL_TESTS"
+      - "POWER_DOWN_TESTS"
+    features:
+      - "DEVICE_ID check (0x0004)"
+      - "1-lane SDOUT init sequence (SBASB22 Table 7-18)"
+      - "Per-channel PGA range and input type"
+      - "CONVST + snapshot of 16 channels"
+      - "Offset and gain calibration registers"
+      - "Digital window comparator"
+      - "Standby / power-down"
+
+  basic_snapshot:
+    description: "Initialize and print a live 16-channel snapshot loop"
+    source_file: "basic_snapshot_example.cpp"
+    category: "example"
+    idf_versions: ["release/v5.5"]
+    build_types: ["Debug", "Release"]
+    ci_enabled: false
+    featured: true
+    hardware_required: true
+
+  pga_offset:
+    description: "Mixed PGA ranges plus offset/gain programming"
+    source_file: "pga_offset_example.cpp"
+    category: "example"
+    idf_versions: ["release/v5.5"]
+    build_types: ["Debug", "Release"]
+    ci_enabled: false
+    featured: true
+    hardware_required: true
+
+build_config:
+  build_types:
+    Debug:
+      description: "Debug build with symbols"
+      cmake_build_type: "Debug"
+      optimization: "-O0"
+      debug_level: "-g3"
+      defines: ["DEBUG", "ADS9324_DEBUG"]
+    Release:
+      description: "Release build"
+      cmake_build_type: "Release"
+      optimization: "-O2"
+      debug_level: "-g0"
+      defines: ["NDEBUG", "ADS9324_RELEASE"]
+  build_directory_pattern: "build-app-{app_type}-type-{build_type}-target-{target}-idf-{idf_version}"
+  project_name_pattern: "esp32_ads9324_{app_type}_app"

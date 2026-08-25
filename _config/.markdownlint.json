@@ -1,0 +1,19 @@
+{
+  "_comment": "Markdownlint configuration for documentation - see .markdownlint-rules.md for detailed explanations",
+  "MD012": false,
+  "MD013": {
+    "line_length": 120,
+    "tables": false,
+    "code_blocks": false
+  },
+  "MD022": false,
+  "MD024": false,
+  "MD025": false,
+  "MD029": false,
+  "MD031": false,
+  "MD032": false,
+  "MD036": false,
+  "MD040": false,
+  "MD047": false,
+  "MD051": false
+}

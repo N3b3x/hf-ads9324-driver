@@ -1,0 +1,55 @@
+# Lychee Link Checker Configuration - Template for HF Drivers
+# =============================================================================
+# This configuration handles common issues with link checking for HF drivers,
+# particularly GNU license URLs that are frequently rate-limited.
+# Based on official example: https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml
+# =============================================================================
+
+# Website timeout from connect to response finished (in seconds)
+timeout = 30
+
+# Maximum number of allowed retries before a link is declared dead
+max_retries = 3
+
+# Maximum number of allowed redirects
+max_redirects = 10
+
+# Minimum wait time in seconds between retries of failed requests
+retry_wait_time = 1
+
+# User agent to send with each request
+user_agent = "lychee/0.21.0"
+
+# Request method
+method = "get"
+
+# Proceed for server connections considered insecure (invalid TLS)
+insecure = false
+
+# Exclude all private IPs from checking
+exclude_all_private = true
+
+# Check mail addresses (disabled to avoid mailto links)
+include_mail = false
+
+# Check links inside code and pre blocks as well as Markdown code blocks
+include_verbatim = false
+
+# Skip missing input files (default is to error if they don't exist)
+skip_missing = false
+
+# Comma-separated list of accepted status codes for valid links
+accept = ["200", "429", "403"]
+
+# Exclude URLs and mail addresses from checking (treated as regular expressions)
+exclude = [
+  '^https://www\.gnu\.org/licenses/gpl-3\.0/?$',
+  '^https://gnu\.org/licenses/gpl-3\.0/?$',
+  '^https://www\.gnu\.org/licenses/gpl-3\.0\.html$',
+  '^https://img\.shields\.io/badge/License-GPLv3-blue\.svg$',
+  '^https?://(www\.)?gnu\.org/licenses/.*',
+  '^https?://img\.shields\.io/badge/License-.*',
+
+  # Manufacturer / IC vendor documentation URLs (frequently block automated crawlers)
+  '^https?://(www\.)?ti\.com/',
+]

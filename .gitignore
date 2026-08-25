@@ -1,0 +1,100 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debug information files
+*.dwo
+
+# Build directories (ESP-IDF and general)
+**/build/
+**/build_*/
+**/build*/
+/build/
+build/
+examples/esp32/build*/
+examples/esp32/**/build*/
+
+# ESP-IDF specific
+# sdkconfig and sdkconfig.defaults should be tracked (contain important ESP32 configuration)
+# Only ignore backup files
+**/sdkconfig.old
+**/partition_table.csv
+**/*.elf
+**/*.bin
+**/*.map
+**/*.hex
+**/*.img
+**/*.ota
+
+# CMake and Make build folders
+CMakeFiles/
+**/CMakeFiles/
+CMakeCache.txt
+**/CMakeCache.txt
+cmake_install.cmake
+**/cmake_install.cmake
+Makefile
+**/Makefile
+
+# Dependencies
+**/dependencies.lock
+
+# Documentation output
+**/docs/html/
+**/docs/doxygen/
+docs/doxygen/
+docs/html/
+
+# VSCode user-specific files (keep .vscode/ but ignore user files)
+.vscode/settings.json.user
+.vscode/*.backup
+
+# IDE settings
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+.venv/
+**/venv/
+**/.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+.python_env/
