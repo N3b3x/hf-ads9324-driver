@@ -1,13 +1,16 @@
 # Doxygen Awesome CSS Theme
 
-This directory contains the [doxygen-awesome-css](https://github.com/jothepro/doxygen-awesome-css) theme as a Git submodule.
+Vendored [doxygen-awesome-css](https://github.com/jothepro/doxygen-awesome-css) **v2.3.4**
+(`doxygen-awesome.css`) so HTML generation does not require a git submodule.
 
-## Setup
+Referenced from `_config/Doxyfile` as `HTML_EXTRA_STYLESHEET`.
+
+To refresh:
 
 ```bash
-git submodule update --init --recursive
+curl -fsSL -o _config/doxygen-extensions/doxygen-awesome-css/doxygen-awesome.css \
+  https://raw.githubusercontent.com/jothepro/doxygen-awesome-css/v2.3.4/doxygen-awesome.css
 ```
 
-## Usage
-
-The theme is referenced in the `Doxyfile` configuration. See the parent `_config/Doxyfile` for integration details.
+Graphviz (`dot`) is optional. Set `HAVE_DOT = YES` in the Doxyfile when `dot` is on PATH
+for class and include graphs.

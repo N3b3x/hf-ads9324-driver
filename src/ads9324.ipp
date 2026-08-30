@@ -3,6 +3,16 @@
  * @brief Template implementation for ads9324::ADS9324
  * @copyright Copyright (c) 2026 HardFOC. All rights reserved.
  * @ingroup ads9324_core
+ *
+ * @details
+ * Header-only `.ipp` (same pattern as hf-ads7952-driver). Public contracts live
+ * in `ads9324.hpp`; this file documents the silicon sequences that are not
+ * obvious from the signatures: banked PGA nibble merge, two-frame register
+ * read, CONVST/DRDY handshake, and SDOUT burst unpack.
+ *
+ * @note SPI write helpers currently treat the CRTP `transfer` as infallible
+ *       (always return true). Surface transport errors when the platform
+ *       adapter reports them.
  */
 #pragma once
 
@@ -21,6 +31,7 @@ ADS9324<SpiType, HostType>::ADS9324(SpiType& spi, HostType& host) noexcept
   }
 }
 
+/** Pack @p tx24 into three bytes, full-duplex, reassemble MISO MSB-first. */
 template <typename SpiType, typename HostType>
 uint32_t ADS9324<SpiType, HostType>::spiTransfer24(uint32_t tx24) noexcept {
   uint8_t tx[3] = {
@@ -34,6 +45,7 @@ uint32_t ADS9324<SpiType, HostType>::spiTransfer24(uint32_t tx24) noexcept {
          static_cast<uint32_t>(rx[2]);
 }
 
+/** BANK_SEL is in the common bank; writing it switches decode for later addresses. */
 template <typename SpiType, typename HostType>
 bool ADS9324<SpiType, HostType>::selectBank(RegisterBank bank) noexcept {
   const uint32_t rx =
@@ -58,6 +70,8 @@ bool ADS9324<SpiType, HostType>::writeRegister(RegisterBank bank, uint8_t addr,
   return true;
 }
 
+// Two-frame read: write GEN_CFG1 with REG_RD_ADD|REG_RD_EN, then clock a dummy
+// 24-bit frame. Payload is bits [23:8] of the second MISO word (Table 7-17).
 template <typename SpiType, typename HostType>
 bool ADS9324<SpiType, HostType>::readRegister(RegisterBank bank, uint8_t addr,
                                               uint16_t& data) noexcept {
@@ -132,6 +146,10 @@ uint16_t ADS9324<SpiType, HostType>::ReadDeviceId() noexcept {
   return id;
 }
 
+/**
+ * PGA_CONFIG_AINxy holds two channels: even local index in bits [7:0], odd in
+ * [15:8]. Bandwidth lives in PGA_BW_SEL (2 bits × local index).
+ */
 template <typename SpiType, typename HostType>
 bool ADS9324<SpiType, HostType>::ConfigureChannel(uint8_t channel,
                                                   const ChannelConfig& cfg) noexcept {
@@ -286,6 +304,10 @@ uint8_t ADS9324<SpiType, HostType>::activeChannelCount() const noexcept {
   }
 }
 
+/**
+ * CONVST high ~1 µs then low (conversion on falling edge). If DRDY is wired,
+ * poll up to DRDY_TIMEOUT_US; otherwise wait CONV_FALLBACK_US.
+ */
 template <typename SpiType, typename HostType>
 bool ADS9324<SpiType, HostType>::pulseConvstAndWait() noexcept {
   host_.ConvstWrite(true);
@@ -306,6 +328,11 @@ bool ADS9324<SpiType, HostType>::pulseConvstAndWait() noexcept {
   return true;
 }
 
+/**
+ * One CS-low burst of N×2 (16-bit) or N×3 (24-bit) bytes. 24-bit mode still
+ * uses the first two bytes as the 16-bit code. Channel i in the burst maps to
+ * API channel i when ADC_NUM_SEL is All16.
+ */
 template <typename SpiType, typename HostType>
 Snapshot ADS9324<SpiType, HostType>::ReadSnapshot() noexcept {
   Snapshot snap{};

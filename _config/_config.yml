@@ -8,8 +8,9 @@
 # -----------------------------------------------------------------------------
 title: "HardFOC ADS9324 Driver"
 description: >
-  Portable C++20 driver for the Texas Instruments ADS9324 12-channel, 12-bit
-  SAR ADC with SPI interface, auto-sequencing, and configurable input range
+  Portable C++20 driver for the Texas Instruments ADS9324 16-channel, 16-bit
+  simultaneous-sampling SAR ADC with integrated PGA, offset/gain calibration,
+  and 1-lane SDOUT conversion readout
 
 baseurl: "/hf-ads9324"
 url: "https://n3b3x.github.io"
@@ -113,11 +114,11 @@ toggle_auto_mode: true
 # -----------------------------------------------------------------------------
 aux_links:
   "📚 GitHub Repository":
-    - "https://github.com/n3b3x/hf-ads9324"
+    - "https://github.com/N3b3x/hf-ads9324-driver"
   "🐛 Report Issues":
-    - "https://github.com/n3b3x/hf-ads9324/issues"
+    - "https://github.com/N3b3x/hf-ads9324-driver/issues"
   "⭐ Star on GitHub":
-    - "https://github.com/n3b3x/hf-ads9324/stargazers"
+    - "https://github.com/N3b3x/hf-ads9324-driver/stargazers"
 
 # -----------------------------------------------------------------------------
 # Footer Customization
@@ -125,9 +126,9 @@ aux_links:
 footer_content: >
   Built with ❤️ using
   <a href='https://just-the-docs.github.io/just-the-docs/'>Just the Docs</a> •
-  <a href='https://github.com/n3b3x/hf-ads9324/blob/main/LICENSE'>GPL v3
+  <a href='https://github.com/N3b3x/hf-ads9324-driver/blob/main/LICENSE'>GPL v3
   License</a> •
-  <a href='https://github.com/n3b3x/hf-ads9324'>View on GitHub</a>
+  <a href='https://github.com/N3b3x/hf-ads9324-driver'>View on GitHub</a>
 
 # -----------------------------------------------------------------------------
 # Just the Docs Advanced Configuration
@@ -137,9 +138,9 @@ just_the_docs:
 
   nav_external_links:
     - title: "📚 GitHub Repository"
-      url: "https://github.com/n3b3x/hf-ads9324"
+      url: "https://github.com/N3b3x/hf-ads9324-driver"
     - title: "🐛 Issues"
-      url: "https://github.com/n3b3x/hf-ads9324/issues"
+      url: "https://github.com/N3b3x/hf-ads9324-driver/issues"
 
   head_custom: _includes/head_custom.html
 
@@ -186,8 +187,8 @@ seo:
   type: "SoftwareApplication"
   name: "HardFOC ADS9324 Driver"
   description: >
-    Portable C++20 driver for the Texas Instruments ADS9324 12-channel, 12-bit
-    SAR ADC with SPI interface, auto-sequencing, and configurable input range
+    Portable C++20 driver for the Texas Instruments ADS9324 16-channel, 16-bit
+    simultaneous-sampling SAR ADC with integrated PGA and 1-lane SDOUT readout
   url: "https://n3b3x.github.io/hf-ads9324"
   twitter:
     card: "summary_large_image"
@@ -202,7 +203,7 @@ seo:
 social:
   name: "HardFOC ADS9324 Driver"
   links:
-    - "https://github.com/n3b3x/hf-ads9324"
+    - "https://github.com/N3b3x/hf-ads9324-driver"
     - "https://github.com/n3b3x"
 
 # -----------------------------------------------------------------------------

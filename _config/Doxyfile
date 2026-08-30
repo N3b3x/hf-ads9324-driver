@@ -5,9 +5,9 @@
 #---------------------------------------------------------------------------
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME = "HF-ADS9324 Driver"
-PROJECT_NUMBER         =
-PROJECT_BRIEF          = "HF-ADS9324 C++ Driver"
+PROJECT_NAME           = "HF-ADS9324 Driver"
+PROJECT_NUMBER         = 1.0.0
+PROJECT_BRIEF          = "TI ADS9324 16-ch 16-bit simultaneous SAR + PGA (C++20 CRTP)"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
@@ -26,7 +26,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
                          a \
                          an \
                          the
-ALWAYS_DETAILED_SEC    = NO
+ALWAYS_DETAILED_SEC    = YES
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = YES
 STRIP_FROM_PATH        =
@@ -69,7 +69,7 @@ TIMESTAMP              = NO
 #---------------------------------------------------------------------------
 
 EXTRACT_ALL            = YES
-EXTRACT_PRIVATE        = NO
+EXTRACT_PRIVATE        = YES
 EXTRACT_PRIV_VIRTUAL   = NO
 EXTRACT_PACKAGE        = NO
 EXTRACT_STATIC         = YES
@@ -92,7 +92,7 @@ FORCE_LOCAL_INCLUDES   = NO
 INLINE_INFO            = YES
 SORT_MEMBER_DOCS       = YES
 SORT_BRIEF_DOCS        = NO
-SORT_MEMBERS_CTORS_1ST = NO
+SORT_MEMBERS_CTORS_1ST = YES
 SORT_GROUP_NAMES       = NO
 SORT_BY_SCOPE_NAME     = NO
 STRICT_PROTO_MATCHING  = NO
@@ -118,8 +118,8 @@ WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 WARN_IF_INCOMPLETE_DOC = YES
-WARN_NO_PARAMDOC       = NO
-WARN_IF_UNDOC_ENUM_VAL = NO
+WARN_NO_PARAMDOC       = YES
+WARN_IF_UNDOC_ENUM_VAL = YES
 WARN_AS_ERROR          = NO
 WARN_FORMAT            = "$file:$line: $text"
 WARN_LINE_FORMAT       = "at line $line of file $file"
@@ -129,9 +129,8 @@ WARN_LOGFILE           =
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = inc src README.md
+INPUT                  = inc src README.md docs
 INPUT_ENCODING         = UTF-8
-INPUT_FILE_ENCODING    =
 FILE_PATTERNS          = *.c \
                          *.cc \
                          *.cxx \
@@ -145,16 +144,18 @@ FILE_PATTERNS          = *.c \
                          *.ipp \
                          *.md
 RECURSIVE              = YES
-EXCLUDE                =
+EXCLUDE                = docs/doxygen \
+                         docs/datasheet
 EXCLUDE_SYMLINKS       = NO
-EXCLUDE_PATTERNS       =
+EXCLUDE_PATTERNS       = */docs/doxygen/* \
+                         */docs/datasheet/*
 EXCLUDE_SYMBOLS        =
-EXAMPLE_PATH           =
+EXAMPLE_PATH           = examples/esp32/main
 EXAMPLE_PATTERNS       = *
-EXAMPLE_RECURSIVE      = NO
+EXAMPLE_RECURSIVE      = YES
 IMAGE_PATH             =
 INPUT_FILTER           =
-FILTER_PATTERNS        =
+FILTER_PATTERNS        = *.md="sed -e '/^---$/,/^---$/d'"
 FILTER_SOURCE_FILES    = NO
 FILTER_SOURCE_PATTERNS =
 USE_MDFILE_AS_MAINPAGE = README.md
@@ -275,8 +276,9 @@ SKIP_FUNCTION_MACROS   = YES
 #---------------------------------------------------------------------------
 
 TAGFILES               =
-GENERATE_TAGFILE       =
-ALLEXTERNALS           = NO
+# Tag file for optional cross-tree linking (do not point TAGFILES at a missing
+# file — generate this tree first, then add TAGFILES in the consumer Doxyfile).
+GENERATE_TAGFILE       = docs/doxygen/hf-ads9324.tag
 EXTERNAL_GROUPS        = YES
 EXTERNAL_PAGES         = YES
 
@@ -284,7 +286,7 @@ EXTERNAL_PAGES         = YES
 # Configuration options related to diagram generation
 #---------------------------------------------------------------------------
 
-CLASS_DIAGRAMS         = YES
+# CLASS_DIAGRAMS removed (obsolete in Doxygen ≥ 1.9). Use HAVE_DOT + CLASS_GRAPH.
 DIA_PATH               =
 HIDE_UNDOC_RELATIONS   = YES
 HAVE_DOT               = NO

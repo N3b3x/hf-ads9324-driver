@@ -10,11 +10,11 @@ permalink: /
 
 **Portable C++20 driver for the Texas Instruments ADS9324 — 16-channel, 16-bit, 1 MSPS simultaneous-sampling SAR ADC with integrated analog front-end (PGA, differential / single-ended, offset and gain calibration).**
 
-This chip is **piped through hf-core and ready**, but it is **not** the live product AFE. Insufflator images keep **ADS7952** (+ MCU ADC) until the pressure board is redesigned around ADS9324.
+This repository owns the silicon protocol only. Hosts implement `SpiInterface` and `HostInterface` (see `examples/esp32/` for one CRTP backend).
 
 ## Overview
 
-The ADS9324 (TI SBASB22, December 2025) is a 16-channel data-acquisition SoC: each channel has a clamp, PGA, and SAR. CONVST falling edge samples all enabled channels together. The default digital path in this driver is **1-lane 16-bit conversion data on SDOUT** plus 24-bit configuration SPI on the same SDI/SCLK/CS pins (Table 7-18), so ESP32-C6 and STM32 SPI peripherals can bring the part up without a multi-lane capture engine.
+The ADS9324 (TI SBASB22, December 2025) is a 16-channel data-acquisition SoC: each channel has a clamp, PGA, and SAR. CONVST falling edge samples all enabled channels together. The default digital path in this driver is **1-lane 16-bit conversion data on SDOUT** plus 24-bit configuration SPI on the same SDI/SCLK/CS pins (Table 7-18), so a normal SPI controller can bring the part up without a multi-lane capture engine.
 
 Datasheet (PDF + extracted text) lives in [`docs/datasheet/`](docs/datasheet/).
 
@@ -80,10 +80,6 @@ Default pins (edit `main/esp32_ads9324_test_config.hpp`):
 | CS | 10 |
 | CONVST | 3 |
 | DRDY | 11 |
-
-## hf-core
-
-`HF_CORE_ENABLE_ADS9324` compiles `Ads9324Handler` (`BaseAdc`). Default is **OFF** in both hf-core and product images. ESP32 hf-core examples turn it ON to compile the handler test. Product `AdcManager` still owns **ADS7952** only. Flip the AFE in a later pin-freeze when the board has ADS9324 + CONVST/DRDY.
 
 ## License
 

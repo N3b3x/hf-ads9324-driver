@@ -18,5 +18,3 @@ target_link_libraries(your_app PRIVATE hf::ads9324)
 ```
 
 ESP-IDF: use `examples/esp32` and `idf.py set-target esp32c6`.
-
-hf-core: nested submodule `hf-core-drivers/external/hf-ads9324-driver` plus `HF_CORE_ENABLE_ADS9324` (OFF by default; ON in ESP32 examples only).

@@ -2,6 +2,13 @@
  * @file esp32_ads9324_bus.hpp
  * @brief ESP32-C6 SPI + CONVST/DRDY transport for the ADS9324 driver
  * @ingroup ads9324_examples_support
+ *
+ * @details
+ * Implements both CRTP contracts on one type so examples can pass the same
+ * object as SpiType and HostType. CS is handled by the ESP-IDF SPI device
+ * driver (one transaction = one CS-low window).
+ *
+ * @see esp32_ads9324_test_config.hpp
  */
 #pragma once
 
@@ -17,25 +24,31 @@
 #include <cstring>
 #include <memory>
 
+/**
+ * @ingroup ads9324_examples_support
+ * @brief ESP-IDF SPI2 + GPIO backend for ADS9324 examples.
+ */
 class Esp32Ads9324Bus : public ads9324::SpiInterface<Esp32Ads9324Bus>,
                         public ads9324::HostInterface<Esp32Ads9324Bus> {
 public:
+  /** @brief Pin and SPI-host settings (filled from ADS9324_TestConfig). */
   struct Config {
-    spi_host_device_t host;
-    gpio_num_t miso_pin;
-    gpio_num_t mosi_pin;
-    gpio_num_t sclk_pin;
-    gpio_num_t cs_pin;
-    gpio_num_t convst_pin;
-    gpio_num_t drdy_pin;
-    bool use_drdy;
-    uint32_t frequency;
-    uint8_t mode;
+    spi_host_device_t host;  ///< SPI2_HOST on ESP32-C6.
+    gpio_num_t miso_pin;     ///< SDOUT.
+    gpio_num_t mosi_pin;     ///< SDI.
+    gpio_num_t sclk_pin;     ///< SCLK.
+    gpio_num_t cs_pin;       ///< Active-low CS.
+    gpio_num_t convst_pin;   ///< CONVST output.
+    gpio_num_t drdy_pin;     ///< DRDY input (ignored when @ref use_drdy is false).
+    bool use_drdy;           ///< false → timed CONVST fallback.
+    uint32_t frequency;      ///< Hz (example default 8 MHz).
+    uint8_t mode;            ///< 0 = mode 0.
     uint8_t queue_size;
     uint8_t cs_ena_pretrans;
     uint8_t cs_ena_posttrans;
   };
 
+  /** @brief Store config; call @ref initialize before @ref transfer. */
   explicit Esp32Ads9324Bus(const Config& config) : config_(config) {}
   ~Esp32Ads9324Bus() { deinitialize(); }
 
